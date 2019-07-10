@@ -11,6 +11,14 @@ Fork and clone this repo. On your fork, answer and commit the follow questions. 
 
 - Translate at least 3 of the capital names into another language.
 
+var citiesDict = ["Mexico":"Mexico City","France":"Paris","Canada":"Ottawa"]
+
+citiesDict["Germany"] = "Berlin"
+citiesDict["Japan"] = "Tokyo"
+citiesDict["Mexico"] = "Ciudad de México"
+citiesDict["Japan"] = "東京"
+citiesDict["France"] = "Paris with a French accent"
+
 
 ## Question 2
 
@@ -27,6 +35,27 @@ Fork and clone this repo. On your fork, answer and commit the follow questions. 
 - Remove the new keys made in the previous two steps
 
 - Add 2 to every value inside of `someDict`.
+
+var someDict:[String:Int] = ["One": 1, "Two": 4, "Three": 9, "Four": 16, "Five": 25]
+
+print(someDict["Three"]! + someDict["Five"]!)
+
+someDict["Six"] = 5
+someDict["Seven"] = 0
+
+someDict["productUpToSeven"] = someDict["One"]! + someDict["Two"]! + someDict["Three"]! + someDict["Four"]! + someDict["Five"]! + someDict["Six"]! + someDict["Seven"]!
+
+someDict.removeValue(forKey: "productUpToSeven")
+someDict.removeValue(forKey: "Six")
+someDict.removeValue(forKey: "Seven")
+
+//someDict["One"] = someDict["One"]! + 2
+
+for (k,v) in someDict {
+someDict[k] = v + 2
+}
+print(someDict)
+
 
 
 ## Question 3
@@ -50,6 +79,23 @@ Using the dictionary created in the previous problem, do the following:
 - Write an if/else statement that compares the score of John Krakaur with Mark Twain. Print out the name of the author with the highest score.
 
 - Use a for-loop to iterate through the dictionary you created at the beginning of the problem, and print out the content in the form of key: value, one entry per line.
+
+var authorScores: [String:Float] = ["Mark Twain": 8.9, "Nathaniel Hawethorne": 5.1, "John Steinbeck": 2.3, "C.S. Lewis": 9.9, "Jon Krakauer": 6.1]
+
+print(authorScores["John Steinbeck"]!)
+
+authorScores["Erik Larson"] = 9.2
+
+if authorScores["Jon Krakauer"]! > authorScores["Mark Twain"]! {
+print("Jon Krakauer")
+}
+else {
+print("Mark Twain")
+}
+
+for (k,i) in authorScores {
+print("\(k): \(i)")
+}
 
 
 ## Question 4
@@ -93,6 +139,32 @@ You are also given an `encodedMessage` which contains only lowercase letters and
 `var encodedMessage = "uijt nfttbhf jt ibse up sfbe"`
 
 
+var message = "hello world"
+var decodedMessage = ""
+
+for i in message {
+if code.keys.contains(String(i)){
+decodedMessage += code[String(i)]!
+}
+}
+print(decodedMessage)
+
+var encodedMessage = "uijt nfttbhf jt ibse up sfbe"
+var decodedEncodedMessage = ""
+
+for i in encodedMessage {
+for (k,v) in code {
+if String(i) == v {
+decodedEncodedMessage += k
+}
+}
+if String(i) == " " {
+decodedEncodedMessage += " "
+}
+}
+print(decodedEncodedMessage)
+
+
 ## Question 5
 
 You are given an array of dictionaries. Each dictionary in the array contains exactly 2 keys `“firstName”` and `“lastName”`. Create an array of strings called `firstNames` that contains only the values for `“firstName”` from each dictionary.
@@ -123,6 +195,53 @@ var people: [[String:String]] = [
 ```
 
 Now, create an array of strings called `fullNames` that contains the values for `“firstName”` and `“lastName”` from the dictionary separated by a space.
+
+var people: [[String:String]] = [
+[
+"firstName": "Calvin",
+"lastName": "Newton"
+],
+[
+"firstName": "Garry",
+"lastName": "Mckenzie"
+],
+[
+"firstName": "Leah",
+"lastName": "Rivera"
+],
+[
+"firstName": "Sonja",
+"lastName": "Moreno"
+],
+[
+"firstName": "Noel",
+"lastName": "Bowen"
+]
+]
+
+var firstNames: [String] = []
+var lastNames: [String] = []
+
+for i in people {
+for (k,v) in i {
+if k == "firstName" {
+firstNames.append(v)
+}
+else if k == "lastName" {
+lastNames.append(v)
+}
+}
+}
+print(firstNames, lastNames)
+
+var fullNames: [String] = []
+
+for i in people {
+for (k,v) in i where k == "firstName" {
+fullNames.append("\(i["firstName"]!) \(i["lastName"]!)")
+}
+}
+print(fullNames)
 
 
 ## Question 6
@@ -161,6 +280,24 @@ var peopleWithScores: [[String: String]] = [
 
 Print out the dictionary above in the following format:  **full name - score**
 
+var topScore = 0
+
+for i in peopleWithScores {
+if Int(i["score"]!)! > topScore {
+topScore = Int(i["score"]!)!
+}
+}
+for i in peopleWithScores {
+if Int(i["score"]!)! == topScore {
+print("\(i["firstName"]!) \(i["lastName"]!)")
+}
+}
+
+
+for i in peopleWithScores {
+print("\(i["firstName"]!) \(i["lastName"]!) - \(i["score"]!)")
+}
+
 
 ## Question 7
 
@@ -170,6 +307,18 @@ You are given an array of integers. The frequency of a number is the number of t
 
 Print the numbers in ascending order followed by their frequency.
 
+var numbers = [1, 2, 3, 2, 3, 5, 2, 1, 3, 4, 2, 2, 2]
+var counts: [Int:Int] = [:]
+
+for i in numbers {
+counts[i] = (counts[i] ?? 0) + 1
+}
+print(counts)
+
+var countsVal = counts.sorted(by: >)
+print(countsVal)
+
+
 
 ## Question 8
 
@@ -177,10 +326,30 @@ Print the most common letter in the string below:
 
 `var myString = "We're flooding people with information. We need to feed it through a processor. A human must turn information into intelligence or knowledge. We've tended to forget that no computer will ever ask a new question."`
 
+var myString = "We're flooding people with information. We need to feed it through a processor. A human must turn information into intelligence or knowledge. We've tended to forget that no computer will ever ask a new question."
+var counts: [Character:Int] = [:]
+
+
+for i in myString {
+if i != " " {
+counts[i] = (counts[i] ?? 0) + 1
+}
+}
+
+var letterFrequency = counts.sorted(by: {$0.value < $1.value})
+print(letterFrequency.last!)
+
 
 ## Question 9
 
 Write code that creates a dictionary where the keys are Ints between 0 and 20 inclusive, and each key's value is its cube.
+
+var lameDict: [Int:Int] = [:]
+
+for i in 0...20 {
+lameDict[i] = (i * i * i)
+}
+print(lameDict)
 
 
 ## Question 10
@@ -191,6 +360,18 @@ Write code that iterates through `testStates` and prints out whether or not that
 let statePop = ["Alabama": 4.8, "Alaska": 0.7, "Arizona": 6.7, "Arkansas": 3.0]
 let testStates = ["California","Arizona", "Alabama", "New Mexico"]
 ```
+
+
+let statePop = ["Alabama": 4.8, "Alaska": 0.7, "Arizona": 6.7, "Arkansas": 3.0]
+let testStates = ["California","Arizona", "Alabama", "New Mexico"]
+
+for i in testStates {
+if testStates.contains(i) == true {
+print ("\(i) is in statePop")
+}
+}
+
+
 
 
 ## Question 11
@@ -212,13 +393,50 @@ var deposits: [String: [Double]] = [
  "Johnson" : [12.56, 300.00, 640.50, 255.60, 26.88]
 ]
 ```
+var deposits: [String: [Double]] = [
+"Williams" : [300.65, 270.45, 24.70, 52.00, 99.99],
+"Cooper" : [200.56, 55.00, 600.78, 305.15, 410.76, 35.00],
+"Davies" : [400.98, 56.98, 300.00],
+"Clark" : [555.23, 45.67, 99.95, 80.76, 56.99, 46.50, 265.70],
+"Johnson" : [12.56, 300.00, 640.50, 255.60, 26.88]
+]
+var sum: (Double) = 0.0
+var emptyDict: [String:Double] = [:]
 
+
+for (k,v) in deposits {
+sum = 0
+for i in v {
+sum += i
+}
+emptyDict[k] = sum
+print("\(k) received \(sum)")
+}
+
+print(emptyDict.sorted(by: {$0.value < $1.value}))
+
+\\UGH
 
 ## Question 12
 
 Print the second most common letter in the string below:
 
 `var myString = "We're flooding people with information. We need to feed it through a processor. A human must turn information into intelligence or knowledge. We've tended to forget that no computer will ever ask a new question."`
+
+var myString = "We're flooding people with information. We need to feed it through a processor. A human must turn information into intelligence or knowledge. We've tended to forget that no computer will ever ask a new question."
+var counts: [Character:Int] = [:]
+
+
+for i in myString {
+if i != " " {
+counts[i] = (counts[i] ?? 0) + 1
+}
+}
+
+var letterFrequency = counts.sorted(by: {$0.value < $1.value})
+letterFrequency.removeLast()
+print(letterFrequency.last!)
+
 
 
 ## Question 13
@@ -235,6 +453,36 @@ let arr2 = [1, 2, 3, 4, 5, 6]
 let arr3 = [5, 6, 7, 8, 9, 10, 11, 12]
 let arr4 = [1, 3, 4, 5, 6, 7, 9]
 ```
+
+
+let arr1 = [2, 4, 5, 6, 8, 10, 12]
+let arr2 = [1, 2, 3, 4, 5, 6]
+let arr3 = [5, 6, 7, 8, 9, 10, 11, 12]
+let arr4 = [1, 3, 4, 5, 6, 7, 9]
+var ascendingArray: [Int] = []
+var painArray: [Int] = []
+
+var arrayOfArrays: [[Int]] = [arr1, arr2, arr3, arr4]
+
+
+for i in arrayOfArrays {
+for j in i {
+if ascendingArray.contains(j) != true {
+ascendingArray.append(j)
+}
+}
+ascendingArray = ascendingArray.sorted(by: <)
+}
+print(ascendingArray)
+
+for i in arrayOfArrays {
+for j in i {
+if arr1.contains(j) && arr2.contains(j) && arr3.contains(j) && arr4.contains(j) && painArray.contains(j) != true {
+painArray.append(j)
+}
+}
+}
+print(painArray)
 
 
 ## Question 14
@@ -273,3 +521,21 @@ establishment of an absolute Tyranny over these States. To prove this, let Facts
 candid world.
 """
 ```
+var declarationComponents = declarationOfIndependence.components(separatedBy: .whitespacesAndNewlines)
+var longWords: [String] = []
+var counts: [String:Int] = [:]
+
+
+for i in declarationComponents {
+if i.count >= 5 {
+longWords.append(i)
+}
+}
+//print(longWords)
+
+for i in longWords {
+counts[i] = (counts[i] ?? 0) + 1
+}
+var countsSorted = counts.sorted(by: {$0.value < $1.value})
+
+print(countsSorted.last!)
